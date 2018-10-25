@@ -22,6 +22,10 @@ public class Saldo implements Serializable {
 	@Setter
 	private BigDecimal valor;
 	
+	public Saldo() {
+		// default
+	}
+	
 	public Saldo(BigDecimal valor) {
 		this.valor = valor;
 	}
