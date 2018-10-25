@@ -1,5 +1,7 @@
 package br.com.banco.servicesaldocc.rest.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,11 +28,18 @@ public class SaldoContaCorrenteServiceController {
 	private static final Logger logger = LoggerFactory.getLogger(SaldoContaCorrenteServiceController.class);
 	
 	@Autowired
-	private SaldoContaCorrenteService service; 
+	private SaldoContaCorrenteService service;
+	
+	@Autowired
+	private HttpServletRequest request;
 	
 	@RequestMapping("saldo")
 	public Saldo getSaldo(@RequestParam Long contaId) throws ContaCorrenteNotFoundException {
 		logger.info("Iniciando a consulta de saldo para a conta de ID:" + contaId);
+		
+		if(request.isUserInRole("USER")) {
+			logger.info("O Usuário: " + request.getRemoteUser() + "tem permissão de acesso");
+		}
 	
 		Saldo saldo = service.getSaldoByContaId(contaId);
 		
